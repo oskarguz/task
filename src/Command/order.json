@@ -1,0 +1,21 @@
+{
+    "weight": 5,
+    "totalPrice": 100.0,
+    "currency": "PLN",
+    "countryCode": "PL",
+    "createdAt": "2026-02-12T16:30:00Z",
+    "items": [
+        {
+            "positions": 1,
+            "name": "Item 1",
+            "price": 25.6,
+            "quantity": 2
+        },
+        {
+            "positions": 2,
+            "name": "Item 2",
+            "price": 74.4,
+            "quantity": 1
+        }
+    ]
+}
