@@ -1,0 +1,10 @@
+services:
+  php:
+    container_name: task-php
+    build:
+      context: ./docker
+    ports:
+      - '9000:9000'
+    volumes:
+      - .:/app
+      - ./docker/php.ini:/usr/local/etc/php/conf.d/custom.ini
