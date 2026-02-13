@@ -13,7 +13,7 @@ class MoneyTest extends TestCase
     public function testCreate(): void
     {
         $money = Money::create(10.5, 'USD');
-        $this->assertSame('10.50', $money->getValue());
+        $this->assertSame('10.50', $money->getValueScalar());
         $this->assertSame('10.50 USD', $money->getFormatted());
     }
 
@@ -22,7 +22,7 @@ class MoneyTest extends TestCase
         $money1 = Money::create(10.0, 'USD');
         $money2 = Money::create(5.5, 'USD');
         $result = $money1->add($money2);
-        $this->assertSame('15.50', $result->getValue());
+        $this->assertSame('15.50', $result->getValueScalar());
         $this->assertSame('15.50 USD', $result->getFormatted());
     }
 

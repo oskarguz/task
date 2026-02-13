@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use App\ValueObject\Money;
+use App\ValueObject\MoneyInterface;
 
 class OrderItem
 {
     public function __construct(
         private int $position,
         private string $name,
-        private Money $price,
+        private MoneyInterface $price,
         private int $quantity
     ) {
     }
@@ -37,12 +37,12 @@ class OrderItem
         return $this;
     }
 
-    public function getPrice(): Money
+    public function getPrice(): MoneyInterface
     {
         return $this->price;
     }
 
-    public function setPrice(Money $price): self
+    public function setPrice(MoneyInterface $price): self
     {
         $this->price = $price;
         return $this;

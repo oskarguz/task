@@ -54,8 +54,8 @@ class OrderItemFactoryTest extends TestCase
 
         $this->assertSame($expected['position'], $item->getPosition());
         $this->assertSame($expected['name'], $item->getName());
-        $this->assertSame($expected['price'], $item->getPrice()->getValue());
-        $this->assertSame($expected['currency'], $item->getPrice()->getCurrency());
+        $this->assertSame($expected['price'], $item->getPrice()->getValueScalar());
+        $this->assertSame($expected['currency'], $item->getPrice()->getCurrencyCode());
         $this->assertSame($expected['quantity'], $item->getQuantity());
     }
 }

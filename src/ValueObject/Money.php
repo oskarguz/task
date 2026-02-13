@@ -9,46 +9,54 @@ use App\ValueObject\NumberInterface;
 use InvalidArgumentException;
 use ValueError;
 
-readonly class Money implements NumberInterface
+readonly class Money implements MoneyInterface
 {
     /**
      * @throws ValueError
      */
-    public static function create(string|int|float|NumberInterface $value, string $currency = 'PLN'): self
+    public static function create(string|int|float|NumberInterface $value, string $currencyCode = 'PLN'): self
     {
-        return new self($value instanceof NumberInterface ? $value : Number::create($value), $currency);
+        return new self(
+            $value instanceof NumberInterface ? $value : Number::create($value),
+            $currencyCode
+        );
     }
 
     private function __construct(
-        private readonly Number $value,
-        private readonly string $currency = 'PLN',
+        private readonly NumberInterface $value,
+        private readonly string $currencyCode = 'PLN',
     ) {
     }
 
-    public function getValue(): string
+    public function getValue(): NumberInterface
+    {
+        return $this->value;
+    }
+
+    public function getValueScalar(): string
     {
         return $this->value->getValue();
     }
 
     public function getFormatted(): string
     {
-        return $this->value->getValue() . ' ' . $this->currency;
+        return $this->value->getValue() . ' ' . $this->getCurrencyCode();
     }
 
-    public function getCurrency(): string
+    public function getCurrencyCode(): string
     {
-        return $this->currency;
+        return $this->currencyCode;
     }
 
     /**
      * @throws InvalidArgumentException
      */
-    public function add(Money $price): self
+    public function add(MoneyInterface $price): self
     {
-        if ($this->currency !== $price->currency) {
+        if ($this->getCurrencyCode() !== $price->getCurrencyCode()) {
             throw new InvalidArgumentException('Cannot add money with different currencies');
         }
 
-        return new self($this->value->add($price->getValue()), $this->currency);
+        return new self($this->value->add($price->getValue()), $this->getCurrencyCode());
     }
 }

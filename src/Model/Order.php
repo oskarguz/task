@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace App\Model;
 
 use DateTimeImmutable;
-use App\ValueObject\Money;
-use App\ValueObject\Number;
+use App\ValueObject\MoneyInterface;
+use App\ValueObject\NumberInterface;
 
-class Order
+class Order implements OrderInterface
 {
     public function __construct(
-        private Number $weight,
-        private Money $totalPrice,
+        private NumberInterface $weight, // in kilograms
+        private MoneyInterface $totalPrice,
         private string $countryCode,
         private DateTimeImmutable $createdAt,
         /** @var OrderItem[] */
@@ -20,23 +20,23 @@ class Order
     ) {
     }
 
-    public function getWeight(): Number
+    public function getWeight(): NumberInterface
     {
         return $this->weight;
     }
 
-    public function setWeight(Number $weight): self
+    public function setWeight(NumberInterface $weight): self
     {
         $this->weight = $weight;
         return $this;
     }
 
-    public function getTotalPrice(): Money
+    public function getTotalPrice(): MoneyInterface
     {
         return $this->totalPrice;
     }
 
-    public function setTotalPrice(Money $totalPrice): self
+    public function setTotalPrice(MoneyInterface $totalPrice): self
     {
         $this->totalPrice = $totalPrice;
         return $this;

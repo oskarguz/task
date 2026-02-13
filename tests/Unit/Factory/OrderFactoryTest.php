@@ -66,9 +66,9 @@ class OrderFactoryTest extends TestCase
 
         $order = $factory->create($data);
 
-        $this->assertSame($expected['totalPrice'], $order->getTotalPrice()->getValue());
+        $this->assertSame($expected['totalPrice'], $order->getTotalPrice()->getValueScalar());
         $this->assertSame($expected['weight'], $order->getWeight()->getValue());
-        $this->assertSame($expected['currency'], $order->getTotalPrice()->getCurrency());
+        $this->assertSame($expected['currency'], $order->getTotalPrice()->getCurrencyCode());
         $this->assertSame($expected['countryCode'], $order->getCountryCode());
         $this->assertSame($expected['createdAt'], $order->getCreatedAt()->format('Y-m-d H:i:s'));
         $this->assertCount($expected['itemsCount'], $order->getItems());
