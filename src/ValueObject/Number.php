@@ -33,7 +33,12 @@ readonly class Number implements NumberInterface
      */
     public function add(string|int|float|NumberInterface $value): self
     {
-        $val = (string)($value instanceof NumberInterface ? $value->getValue() : $value);
+        if ($value instanceof NumberInterface) {
+            $val = $value->getValue();
+        } else {
+            $val = Number::create($value)->getValue();
+        }
+
         $sum = bcadd($this->value, $val, 2);
 
         return new self($sum);
