@@ -9,14 +9,16 @@ use DateTimeImmutable;
 use App\ValueObject\Money;
 use App\ValueObject\Number;
 use App\Enum\OrderFields;
+use ValueError;
 
 class OrderFactory
 {
     private const string DEFAULT_WEIGHT = '0';
     private const string DEFAULT_PRICE = '0';
     private const string DEFAULT_CURRENCY = 'PLN';
-    private const string DEFAULT_COUNTRY_CODE = '';
+    private const string DEFAULT_COUNTRY_CODE = 'PL';
     private const string DEFAULT_CREATED_AT = '@0';
+    private const string DATETIME_FORMAT = DateTimeImmutable::ATOM;
     private const array DEFAULT_ITEMS = [];
 
     public function __construct(
@@ -24,10 +26,13 @@ class OrderFactory
     ) {
     }
 
+    /**
+     * @throws ValueError
+     */
     public function create(array $data): Order
     {
         $createdAt = DateTimeImmutable::createFromFormat(
-            DateTimeImmutable::ATOM,
+            self::DATETIME_FORMAT,
             (string) ($data[OrderFields::createdAt->name] ?? '')
         );
         if ($createdAt === false) {

@@ -35,6 +35,11 @@ readonly class Money implements NumberInterface
         return $this->value->getValue() . ' ' . $this->currency;
     }
 
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
     /**
      * @throws InvalidArgumentException
      */

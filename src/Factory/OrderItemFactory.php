@@ -7,15 +7,19 @@ namespace App\Factory;
 use App\Model\OrderItem;
 use App\ValueObject\Money;
 use App\Enum\OrderItemFields;
+use ValueError;
 
 class OrderItemFactory
 {
-    private const int DEFAULT_POSITION = 0;
+    private const int DEFAULT_POSITION = 1;
     private const string DEFAULT_NAME = '';
     private const string DEFAULT_PRICE = '0';
     private const string DEFAULT_CURRENCY = 'PLN';
     private const int DEFAULT_QUANTITY = 0;
 
+    /**
+     * @throws ValueError
+     */
     public function create(array $data): OrderItem
     {
         return new OrderItem(
