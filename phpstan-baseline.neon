@@ -1,0 +1,163 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Factory\\OrderFactory\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Factory/OrderFactory.php
+
+		-
+			message: '#^Method App\\Factory\\OrderItemFactory\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Factory/OrderItemFactory.php
+
+		-
+			message: '#^Method App\\Model\\Order\:\:setItems\(\) has parameter \$items with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Model/Order.php
+
+		-
+			message: '#^Method App\\Service\\CalculateDeliveryCost\:\:__construct\(\) has parameter \$deliveryCostRuleCollection with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/CalculateDeliveryCost.php
+
+		-
+			message: '#^Method App\\Service\\CalculateDeliveryCost\:\:sortRulesByPriority\(\) has parameter \$rules with no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/CalculateDeliveryCost.php
+
+		-
+			message: '#^Method App\\Service\\CalculateDeliveryCost\:\:sortRulesByPriority\(\) return type has no value type specified in iterable type iterable\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/CalculateDeliveryCost.php
+
+		-
+			message: '#^Method App\\Service\\DeliveryCostRule\\BaseRateByCountry\:\:__construct\(\) has parameter \$baseRatesPerCountry with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/DeliveryCostRule/BaseRateByCountry.php
+
+		-
+			message: '#^Method App\\Service\\DeliveryCostRule\\ValuePromotion\:\:__construct\(\) has parameter \$percentageDiscountPerCountry with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Service/DeliveryCostRule/ValuePromotion.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderFactoryTest\:\:createDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderFactoryTest\:\:testCreate\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderFactoryTest\:\:testCreate\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderItemFactoryTest\:\:createDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderItemFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderItemFactoryTest\:\:testCreate\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderItemFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Factory\\OrderItemFactoryTest\:\:testCreate\(\) has parameter \$expected with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Factory/OrderItemFactoryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\BaseRateByCountryTest\:\:baseRateByCountryDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/BaseRateByCountryTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\FridayPromotionTest\:\:notFridayDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/FridayPromotionTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\ValuePromotionTest\:\:belowThresholdDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/ValuePromotionTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\ValuePromotionTest\:\:calculateAppliesCorrectDiscountDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/ValuePromotionTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\WeightSurchargeTest\:\:noSurchargeWhenWeightWithinLimitDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/WeightSurchargeTest.php
+
+		-
+			message: '#^Method Tests\\Unit\\Service\\DeliveryCostRule\\WeightSurchargeTest\:\:surchargeAppliedDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/Service/DeliveryCostRule/WeightSurchargeTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:addDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:ceilDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:createDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:createWithInvalidValueDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:floorDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:multiplyDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
+
+		-
+			message: '#^Method App\\Tests\\Unit\\ValueObject\\NumberTest\:\:subDataProvider\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: tests/Unit/ValueObject/NumberTest.php
