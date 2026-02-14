@@ -80,9 +80,9 @@ class CalculateDeliveryCostCommand extends Command
             $io->section('Order summary:');
             $io->listing([
                 'Weight: ' . $order->getWeight()->getValue() . ' kg',
-                'Cart total: ' . $order->getTotalPrice()->getFormatted(),
+                'Total price: ' . $order->getTotalPrice()->getFormatted(),
                 'Country: ' . $order->getCountryCode(),
-                'Order date: ' . $order->getCreatedAt()->format('Y-m-d H:i:s')
+                'Created at: ' . $order->getCreatedAt()->format('Y-m-d H:i:s')
                     . ' (day of week: ' . $this->getDayOfWeekName((int) $order->getCreatedAt()->format('N')) . ')',
             ]);
 
