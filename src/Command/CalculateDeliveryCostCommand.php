@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Factory\OrderFactory;
+use App\Service\CalculateDeliveryCost;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use App\Service\CalculateDeliveryCost;
-use App\Factory\OrderFactory;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Throwable;
 
 #[AsCommand(name: 'app:calculate-delivery-cost')]
@@ -28,17 +29,18 @@ class CalculateDeliveryCostCommand extends Command
         $this
             ->addOption('weight', 'w', InputOption::VALUE_OPTIONAL)
             ->addOption('totalPrice', 'p', InputOption::VALUE_OPTIONAL)
-            ->addOption('countryCode', 'cc', InputOption::VALUE_OPTIONAL);
+            ->addOption('countryCode', 'cc', InputOption::VALUE_OPTIONAL)
+            ->addOption('createdAt', 'ca', InputOption::VALUE_OPTIONAL);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
         $weight = $input->getOption('weight');
         $totalPrice = $input->getOption('totalPrice');
         $countryCode = $input->getOption('countryCode');
+        $createdAt = $input->getOption('createdAt');
 
-        $output->writeln('-- Start calculating delivery cost...');
-    
         $orderData = file_get_contents(__DIR__ . '/order.json');
         $orderJson = json_decode($orderData, true, 512, JSON_THROW_ON_ERROR);
 
@@ -51,28 +53,66 @@ class CalculateDeliveryCostCommand extends Command
         if ($countryCode !== null) {
             $orderJson['countryCode'] = $countryCode;
         }
+        if ($createdAt !== null) {
+            $orderJson['createdAt'] = $createdAt;
+        }
 
-        $output->writeln('-- Order data loaded from JSON file:');
-        $output->writeln(json_encode($orderJson, JSON_PRETTY_PRINT));
+        $io->section('Usage');
+        $io->text([
+            'Order data is loaded from order.json. You can override selected fields with options:',
+            'Order items do nothing, they are not used in the calculation :(',
+        ]);
+        $io->listing([
+            '<options=bold>--weight</>, <options=bold>-w</>  – weight in kg)',
+            '<options=bold>--totalPrice</>, <options=bold>-p</>  – cart total in PLN)',
+            '<options=bold>--countryCode</>, <options=bold>-cc</>  – country code, e.g. PL, DE, USA)',
+            '<options=bold>--createdAt</>, <options=bold>-ca</>  – order date and time (YYYY-MM-DDTHH:MM:SSZ)',
+        ]);
+        $io->text('Example: <comment>php bin/console app:calculate-delivery-cost --countryCode=USA --totalPrice=500 --createdAt=2026-02-12T16:30:00Z</comment>');
+        $io->newLine();
+
+        $io->section('JSON content');
+        $io->writeln(json_encode($orderJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
         try {
             $order = $this->orderFactory->create($orderJson);
 
-            $output->writeln('-- Order object created from JSON data:');
-            $output->writeln('Weight: ' . $order->getWeight());
-            $output->writeln('Total price: ' . $order->getTotalPrice()->getFormatted());
-            $output->writeln('Country code: ' . $order->getCountryCode());
-            $output->writeln('Created at: ' . $order->getCreatedAt()->format('Y-m-d H:i:s'));
+            $io->section('Order summary:');
+            $io->listing([
+                'Weight: ' . $order->getWeight()->getValue() . ' kg',
+                'Cart total: ' . $order->getTotalPrice()->getFormatted(),
+                'Country: ' . $order->getCountryCode(),
+                'Order date: ' . $order->getCreatedAt()->format('Y-m-d H:i:s')
+                    . ' (day of week: ' . $this->getDayOfWeekName((int) $order->getCreatedAt()->format('N')) . ')',
+            ]);
 
             $deliveryCost = $this->calculateDeliveryCost->execute($order);
-            $output->writeln('-- Calculated delivery cost: ' . $deliveryCost->getValue() . ' ' . $deliveryCost->getCurrencyCode());
+            $costFormatted = $deliveryCost->getValue()->getValue() . ' ' . $deliveryCost->getCurrencyCode();
+
+            $io->success('Calculation result: ' . $costFormatted);
 
             return Command::SUCCESS;
         } catch (Throwable $throwable) {
-            $output->writeln('<error>Error: ' . $throwable->getMessage() . '</error>');
-            $output->writeln('<error>' . get_class($throwable) . '</error>');
-            $output->writeln('<error>' . $throwable->getFile() . ':' . $throwable->getLine() . '</error>');
+            $io->error([
+                'Error: ' . $throwable->getMessage(),
+                get_class($throwable) . ' in ' . $throwable->getFile() . ':' . $throwable->getLine(),
+            ]);
+
             return Command::FAILURE;
         }
+    }
+
+    private function getDayOfWeekName(int $dayOfWeek): string
+    {
+        return match ($dayOfWeek) {
+            1 => 'Monday',
+            2 => 'Tuesday',
+            3 => 'Wednesday',
+            4 => 'Thursday',
+            5 => 'Friday',
+            6 => 'Saturday',
+            7 => 'Sunday',
+            default => throw new \InvalidArgumentException('Invalid day of week: ' . $dayOfWeek),
+        };
     }
 }
