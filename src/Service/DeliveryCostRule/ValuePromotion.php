@@ -19,7 +19,7 @@ class ValuePromotion implements DeliveryCostRuleInterface
 
     public function __construct(
         string $minTotalPriceForPromotion = '400',
-        string $defaultDiscount = '0.0',
+        string $defaultDiscount = '1.0',
         array $percentageDiscountPerCountry = [
             'USA' => 0.5,
         ],
@@ -28,8 +28,8 @@ class ValuePromotion implements DeliveryCostRuleInterface
         private readonly string $label = 'Promocja wartościowa',
     ) {
         $this->minTotalPriceForPromotion = Number::create($minTotalPriceForPromotion);
-        $this->defaultDiscount = Number::create($defaultDiscount);
-        $this->percentageDiscountPerCountry = array_map([Number::class, 'create'], $percentageDiscountPerCountry);
+        $this->defaultDiscount = Number::create('1.00')->sub($defaultDiscount);
+        $this->percentageDiscountPerCountry = array_map(fn($discount) => Number::create('1.00')->sub($discount), $percentageDiscountPerCountry);
     }
 
     public function isApplicable(OrderInterface $order, DeliveryCostInfoInterface $deliveryCost): bool

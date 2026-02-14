@@ -12,6 +12,8 @@ use App\Model\DeliveryCostInfoInterface;
 
 class FridayPromotion implements DeliveryCostRuleInterface
 {
+    private const string FRIDAY = '5';
+
     private readonly NumberInterface $discount;
 
     public function __construct(
@@ -20,13 +22,14 @@ class FridayPromotion implements DeliveryCostRuleInterface
         private readonly int $priority = 400,
         private readonly string $label = 'Promocyjne Piątki',
     ) {
-        $this->discount = Number::create($discount);
+        $this->discount = Number::create('1.00')->sub($discount);
     }
 
     public function isApplicable(OrderInterface $order, DeliveryCostInfoInterface $deliveryCost): bool
     {
-        return $order->getCreatedAt()->format('N') === '5'
-            && $deliveryCost->getCurrencyCode() === $this->applicableCurrencyCode;
+        return $order->getCreatedAt()->format('N') === self::FRIDAY
+            && $deliveryCost->getCurrencyCode() === $this->applicableCurrencyCode
+            && $deliveryCost->getValue()->toFloat() > 0;
     }
 
     public function calculate(OrderInterface $order, DeliveryCostInterface $deliveryCost): void
